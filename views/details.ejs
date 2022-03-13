@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('./partials/head.ejs') %>
+<body>
+  <%- include('./partials/nav.ejs') %>
+
+  <div class="details content">
+    <h2> <%= blog.title %> </h2>
+    <div class="content">
+      <p> <b> Email Address : </b> <%= blog.body %></p>
+    </div>
+
+    <div class="content">
+      <p> <b> Phone Number : </b><%= blog.snippet %></p>
+    </div>
+
+    <a class="delete" data-doc = "<%= blog._id %>">Delete</a>
+  </div>
+
+  <%- include('./partials/footer.ejs') %>
+
+  <script>
+    const trash = document.querySelector('a.delete');
+
+    trash.addEventListener('click', (e) => {
+      const endpoint = `/contacts/${trash.dataset.doc}`;
+
+      fetch(trash, {
+        method : 'DELETE', 
+      })
+        .then((response) => {
+          response.json()
+            .then((data) => window.location.href = data.redirect);
+        })
+        .catch((err) => console.log(err))
+
+    })
+
+  </script>
+
+
+</body>
+</html>
